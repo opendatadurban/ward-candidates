@@ -14,8 +14,10 @@ def address_to_ward(address):
     return None
 
 def get_candidates(address):
-    ward = address_to_ward(address)
-    return data[ward]
+    if address:
+        ward = address_to_ward(address)
+        return data[ward]
+    return []
 
 if __name__ == "__main__":
     address = raw_input("Enter in your address: ")
