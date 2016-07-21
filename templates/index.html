@@ -3,7 +3,7 @@
     </head>
     <body>
         <form action="/">
-            Enter in your address: <input type="text" name="address"><br/>
+            Enter in your address: <input type="text" name="address" value="54 Main Rd, Cape Town"><br/>
             <input type="submit"/>
         </form>
         <h1>Who are you voting for?</h1>
@@ -12,5 +12,8 @@
             <li>{{ candidate.Fullname|title }} {{ candidate.Surname|title }} - {{ candidate.Party|title }}</li>
             {% endfor%}
         </ol>
+        <footnote>
+        This is super fragile at the moment. If it doesn't work then move house to a place where it does work.
+        </footnote>
     </body>
 </html>
