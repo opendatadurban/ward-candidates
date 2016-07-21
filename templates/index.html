@@ -1,0 +1,16 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <form action="/">
+            Enter in your address: <input type="text" name="address"><br/>
+            <input type="submit"/>
+        </form>
+        <h1>Who are you voting for?</h1>
+        <ol>
+            {% for candidate in candidates %}
+            <li>{{ candidate.Fullname|title }} {{ candidate.Surname|title }} - {{ candidate.Party|title }}</li>
+            {% endfor%}
+        </ol>
+    </body>
+</html>
