@@ -7,6 +7,9 @@ from flask import render_template
 
 app = Flask(__name__)
 
+@app.route("/hello")
+    return "Hello"
+
 @app.route("/")
 def get_candidates():
     address = request.args.get("address")
