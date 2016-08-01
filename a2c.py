@@ -5,19 +5,29 @@ from jinja2 import Template
 
 DATA_FILE = "data.json"
 data = json.load(open(DATA_FILE))
+URL = "http://mapit.code4sa.org/address?address=%s&generation=2&type=WD"
 
 def address_to_ward(address):
-    r = requests.get("http://wards.code4sa.org/?address=" + address)
+    r = requests.get(URL % address)
     js = r.json()
-    if len(js) > 0:
-        return js[0]["ward"]
-    return None
+    ward_no = None
+    formatted_address = "Unknown"
 
-def get_candidates(address):
-    if address:
-        ward = address_to_ward(address)
-        return data[ward]
-    return []
+    for key in js:
+        if "type_name" in js[key]:
+            ward_no = js[key]["name"]
+            ward_key = key
+
+    for address in js["addresses"]:
+        if ward_key in address["areas"]:
+            formatted_address = address["formatted_address"]
+    return {
+        "ward" : ward_no,
+        "address" : formatted_address
+    }
+
+def get_candidates(ward):
+    return data.get(ward, None)
 
 if __name__ == "__main__":
     address = raw_input("Enter in your address: ")

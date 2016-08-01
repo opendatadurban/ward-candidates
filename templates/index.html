@@ -2,16 +2,21 @@
     <head>
     </head>
     <body>
-        <form action="/">
-            Enter in your address: <input type="text" name="address" value="54 Main Rd, Cape Town"><br/>
-            <input type="submit"/>
-        </form>
         <h1>Who are you voting for?</h1>
+        {% if address %}
+        <h2>Address: {{ address }}</h2>
+        {% endif %}
+        {% if candidates %}
         <ol>
             {% for candidate in candidates %}
             <li>{{ candidate.Fullname|title }} {{ candidate.Surname|title }} - {{ candidate.Party|title }}</li>
             {% endfor%}
         </ol>
+        {% endif %}
+        <form action="/">
+            Enter in your address: <input type="text" name="address" value="54 Main Rd, Cape Town"><br/>
+            <input type="submit"/>
+        </form>
         <footnote>
         This is super fragile at the moment. If it doesn't work then move house to a place where it does work.
         </footnote>

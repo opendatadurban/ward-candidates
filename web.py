@@ -14,8 +14,15 @@ def hello():
 @app.route("/")
 def get_candidates():
     address = request.args.get("address")
-    candidates = a2c.get_candidates(address)
-    return render_template('index.html', candidates=candidates)
+    variables = {}
+    if address:
+        ward = a2c.address_to_ward(address)
+        variables.update(ward)
+
+        candidates = a2c.get_candidates(ward["ward"])
+        variables["candidates"] = candidates
+
+    return render_template('index.html', **variables)
 
 if __name__ == "__main__":
     app.run(debug=True)
