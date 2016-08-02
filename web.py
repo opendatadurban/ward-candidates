@@ -21,6 +21,10 @@ def getWardNum(lon,lat):
 
 app = Flask(__name__)
 
+@app.route("/hello")
+def hello():
+    return "Hello"
+
 @app.route("/")
 def get_candidates():
     address = request.args.get("address")
