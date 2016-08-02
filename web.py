@@ -18,7 +18,6 @@ def get_candidates():
     if address:
         ward = a2c.address_to_ward(address)
         variables.update(ward)
-
         candidates = a2c.get_candidates(ward["ward"])
         variables["candidates"] = candidates
 

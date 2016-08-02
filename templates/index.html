@@ -1,34 +1,76 @@
-<html>
-    <head>
-    </head>
-    <body>
-        <h1>Who are you voting for?</h1>
-        {% if address %}
-        <h2>Address: {{ address }}</h2>
-        {% endif %}
-        {% if candidates %}
-        <ol>
-            {% for candidate in candidates %}
-            <li>{{ candidate.Fullname|title }} {{ candidate.Surname|title }} - {{ candidate.Party|title }}</li>
-            {% endfor%}
-        </ol>
-        {% endif %}
-        <form action="/">
-            Enter in your address: <input type="text" name="address" value="54 Main Rd, Cape Town"><br/>
-            <input type="submit"/>
-        </form>
-        <footnote>
-        This is super fragile at the moment. If it doesn't work then move house to a place where it does work.
-        </footnote>
-    </body>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
-      ga('create', 'UA-48399585-44', 'auto');
-      ga('send', 'pageview');
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </script>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Who are you voting for?</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="static/css/voting.css" rel="stylesheet">
+    <script src="/static/js/jquery.js"></script>
+
+</head>
+
+<body>
+
+<section class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Who are you voting for?</div>
+                    <div class="panel-body">
+                        <form role="form" action="/">
+                            <div class="form-group">
+                                <label class="control-label" for="address">Enter your address:</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="e.g. 54 Main Rd, St James">
+                                <p class="help-block">Please include your suburb name in the address where possible, putting just the city may lead to a crash. </p>
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        <div id="results">
+                            {% if address %}
+                            <h1>Address:</h1>
+                            <p> {{ address }}</p>
+
+                            <h1>Your candidates are:</h1>
+                            <ol>
+                                {% for candidate in candidates %}
+                                    <li><a target="_blank" href="http://www.google.com/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }}</a>
+                                        - {{ candidate.Party|title }}</li>
+                                {% endfor %}
+                            </ol>
+                            {% endif %}
+                        </div>
+                    <br>
+                    <p>DISCLAIMER: This is super fragile at the moment. If it doesn't work, move house to a place where it does work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<div class="footer-below text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12" style="">
+                A quick collaboration between <a target="_blank" href="http://code4sa.org/">Code4SA</a> and <a target="_blank" href="http://opendata.durban">Open Data Durban</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
 </html>
