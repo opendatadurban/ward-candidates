@@ -6,6 +6,22 @@ from jinja2 import Template
 DATA_FILE = "data.json"
 data = json.load(open(DATA_FILE))
 URL = "http://mapit.code4sa.org/address?address=%s&generation=2&type=WD"
+URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
+
+def coords_to_ward(lon, lat):
+    url = URLxy % (lon, lat)
+    r = requests.get(url)
+    js = r.json()
+
+    for key in js:
+        if js[key]["type_name"] == 'Ward':
+            ward_no = js[key]["name"]
+
+    return {
+        "ward": ward_no,
+        "address": 'Used geolocation data for Latitude: %.4f and Longitude: %.4f' % (float(lat), float(lon))
+    }
+
 
 def address_to_ward(address):
     r = requests.get(URL % address)

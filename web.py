@@ -7,18 +7,6 @@ from flask import Response
 from flask import request
 from flask import render_template
 
-def getWardNum(lon,lat):
-    URL = "http://mapit.code4sa.org/point/4326/%s,%s" % (lon, lat)
-    r = requests.get(URL)
-    js = r.json()
-
-    for key in js:
-        if js[key]["type_name"] == 'Ward':
-            ward_no = js[key]["name"]
-
-    return {"ward": ward_no,
-            "address": 'Used geolocation data for Latitude: %.4f and Longitude: %.4f' % (float(lat), float(lon))}
-
 app = Flask(__name__)
 
 @app.route("/hello")
@@ -31,15 +19,14 @@ def get_candidates():
     lat = request.args.get("lat")
     lon = request.args.get("lon")
     variables = {}
-
+    candidates = []
+    ward = None
     if address:
         ward = a2c.address_to_ward(address)
-        variables.update(ward)
-        candidates = a2c.get_candidates(ward["ward"])
-        variables["candidates"] = candidates
+    elif lat:
+        ward = a2c.coords_to_ward(lon, lat)
 
-    if lat:
-        ward = getWardNum(lon, lat)
+    if ward:
         variables.update(ward)
         candidates = a2c.get_candidates(ward["ward"])
         variables["candidates"] = candidates
