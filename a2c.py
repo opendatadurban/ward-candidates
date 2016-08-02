@@ -1,12 +1,21 @@
 import requests
+from collections import defaultdict
 import sys
 import json
 from jinja2 import Template
 
 DATA_FILE = "data.json"
-data = json.load(open(DATA_FILE))
 URL = "http://mapit.code4sa.org/address?address=%s&generation=2&type=WD"
 URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
+
+def load_data():
+    ids = defaultdict(list)
+    data = json.load(open(DATA_FILE))
+    for ward, candidates in data.items():
+        for candidate in candidates:
+            idno = candidate["IDNumber"]
+            ids[idno].append(ward)
+    return data, ids
 
 def coords_to_ward(lon, lat):
     url = URLxy % (lon, lat)
@@ -45,6 +54,7 @@ def address_to_ward(address):
 def get_candidates(ward):
     return data.get(ward, None)
 
+data, ids = load_data()
 if __name__ == "__main__":
     address = raw_input("Enter in your address: ")
     ward = address_to_ward(address)
