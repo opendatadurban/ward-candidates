@@ -19,30 +19,6 @@
     <link href="static/css/voting.css" rel="stylesheet">
     <script src="/static/js/jquery.js"></script>
 
-    <script>
-
-        function geoFindMe() {
-            document.getElementById("locate").textContent="Locating, please wait...";
-            if (!navigator.geolocation) {
-                console.log("Geolocation is not supported by your browser");
-            }
-
-            function success(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                document.getElementById("lat").value=latitude;
-                document.getElementById("lon").value=longitude;
-                document.getElementById("locate").textContent="You have been located!";
-            };
-
-            function error() {
-                console.log("Unable to retrieve your location");
-            };
-
-            navigator.geolocation.getCurrentPosition(success, error);
-        }
-    </script>
-
 </head>
 
 <body>
@@ -57,20 +33,10 @@
                             <div class="form-group">
                                 <label class="control-label" for="address">Enter your address:</label>
                                 <input type="text" class="form-control" id="address" name="address" placeholder="e.g. 54 Main Rd, St James">
-                                <input type="hidden" id="lat" name="lat">
-                                <input type="hidden" id="lon" name="lon">
                                 <p class="help-block">Please include your suburb name in the address where possible, putting just the city may lead to a crash. </p>
                             </div>
-                            <label class="control-label" for="address">Or, use your location:</label>
-                            <br>
-                            <button type="button" class="btn btn-default" id="locate" onclick="geoFindMe()">Locate</button>
-                            <br>
-                            <br>
-                            <label class="control-label" for="address">Now hit submit:</label>
-                            <br>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
-
                         <div id="results">
                             {% if address %}
                             <h1>Address:</h1>
@@ -118,7 +84,7 @@
       ga('send', 'pageview');
 
     </script>
+
+
 </body>
-
-
 </html>
