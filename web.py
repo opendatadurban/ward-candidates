@@ -32,6 +32,7 @@ def get_candidates():
         variables["candidates"] = candidates
         for candidate in candidates:
             candidate["wards"] = a2c.ids[candidate["IDNumber"]]
+    variables["ward2"] = ward
     return render_template('index.html', **variables)
 
 if __name__ == "__main__":
