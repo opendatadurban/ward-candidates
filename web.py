@@ -22,7 +22,7 @@ def get_candidates():
     ward_no = request.args.get("ward")
     ward = None
 
-    variables = {}
+    variables = {'missing': False}
     candidates = []
     if address:
         ward = a2c.address_to_ward(address)
@@ -32,14 +32,16 @@ def get_candidates():
         ward = a2c.ward_to_ward(ward_no)
 
     if ward:
-        variables.update(ward)
-        candidates = a2c.get_candidates(ward["ward"])
-        variables["candidates"] = candidates
-        for candidate in candidates:
-            age = a2c.get_age(candidate["IDNumber"])
-            candidate["wards"] = a2c.ids[candidate["IDNumber"]]
-            candidate["age"] = age
-    variables["ward2"] = ward
+        if ward['ward']:
+            variables.update(ward)
+            candidates = a2c.get_candidates(ward["ward"])
+            variables["candidates"] = candidates
+            for candidate in candidates:
+                age = a2c.get_age(candidate["IDNumber"])
+                candidate["wards"] = a2c.ids[candidate["IDNumber"]]
+                candidate["age"] = age
+        else:
+            variables['missing'] = True
     return render_template('index.html', **variables)
 
 if __name__ == "__main__":
