@@ -58,10 +58,13 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Who are you voting for?</div>
                     <div class="panel-body">
+                        {% if missing %}
+                        <p class="alert alert-warning">Hmm, we couldn't find your address or ward. Please try again.</p>
+                        {% endif %}
                         <form role="form" action="/">
                             <div class="form-group">
                                 <label class="control-label" for="address">Enter your address:</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="e.g. 54 Main Rd, St James">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="e.g. 54 Main Rd, St James" value="{{ address }}">
                                 <input type="hidden" id="lat" name="lat">
                                 <input type="hidden" id="lon" name="lon">
                                 <p class="help-block">Please include your suburb name in the address where possible, putting just the city may lead to a crash. </p>
@@ -104,9 +107,9 @@
                         </div>
                         <div>
                             <h2>Results in 2011</h2>
-                            <iframe id="cr-embed-ward-{{ ward2.ward }}-elections-municipal_2011-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward2.ward }}&chartDataID=elections-municipal_2011-party_distribution&dataYear=2011&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>
+                            <iframe id="cr-embed-ward-{{ ward }}-elections-municipal_2011-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-municipal_2011-party_distribution&dataYear=2011&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>
                             <h2>Results in 2014</h2>
-                            <iframe id="cr-embed-ward-{{ ward2.ward }}-elections-national_2014-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward2.ward }}&chartDataID=elections-national_2014-party_distribution&dataYear=2014&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>
+                            <iframe id="cr-embed-ward-{{ ward }}-elections-national_2014-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-national_2014-party_distribution&dataYear=2014&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>
                             <script src="https://wazimap.co.za/static/js/embed.chart.make.js"></script>
                         </div>
                         {% endif %}

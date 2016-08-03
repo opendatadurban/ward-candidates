@@ -32,6 +32,7 @@ def coords_to_ward(lon, lat):
     url = URLxy % (lon, lat)
     r = requests.get(url)
     js = r.json()
+    ward_no = None
 
     for key in js:
         if js[key]["type_name"] == 'Ward':
