@@ -90,10 +90,12 @@
                                     <li><a target="_blank" href="http://www.google.com/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }}</a>
                                         - {{ candidate.Party|title }}</li>
                                         <div class="small">
-                                        Wards this candidate is contesting:<br/>
-                                        {% for ward in candidate.wards %}
-                                            <a href="/?ward={{ ward }}">{{ ward }}</a>
-                                        {% endfor %}
+                                            Wards this candidate is contesting:
+                                            <p>
+                                            {% for ward in candidate.wards %}
+                                                <a href="/?ward={{ ward }}">{{ ward }}</a>
+                                            {% endfor %}
+                                            </p>
                                         </div>
                                 {% endfor %}
                             </ol>
