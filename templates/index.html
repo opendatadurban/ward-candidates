@@ -128,6 +128,17 @@
         </div>
     </div>
 </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdv4dyariKweNpZZ8kwCcFRxU4ZQxN7nQ&libraries=places&callback=init" async defer></script>
+    <script>
+    function init() {
+        var input = document.getElementById('address');
+        var options = {
+            types: ['(cities)'],
+            componentRestrictions: {country: 'za'}
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input);
+    }
+    </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
