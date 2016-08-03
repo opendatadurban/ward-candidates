@@ -3,10 +3,21 @@ from collections import defaultdict
 import sys
 import json
 from jinja2 import Template
+import datetime
 
 DATA_FILE = "data.json"
 URL = "http://mapit.code4sa.org/address?address=%s&generation=2&type=WD"
 URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
+
+def get_age(idnumber):
+    year = 1900 + int(idnumber[0:2])
+    month = int(idnumber[2:4])
+    day = int(idnumber[4:6])
+    today = datetime.datetime.now()
+    birthday = datetime.datetime(year=year, month=month, day=day)
+    age = (today - birthday).days / 365
+    return age
+
 
 def load_data():
     ids = defaultdict(list)

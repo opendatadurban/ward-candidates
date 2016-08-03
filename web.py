@@ -9,6 +9,7 @@ from flask import render_template
 
 app = Flask(__name__)
 
+
 @app.route("/hello")
 def hello():
     return "Hello"
@@ -35,7 +36,9 @@ def get_candidates():
         candidates = a2c.get_candidates(ward["ward"])
         variables["candidates"] = candidates
         for candidate in candidates:
+            age = a2c.get_age(candidate["IDNumber"])
             candidate["wards"] = a2c.ids[candidate["IDNumber"]]
+            candidate["age"] = age
     variables["ward2"] = ward
     return render_template('index.html', **variables)
 
