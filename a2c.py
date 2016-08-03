@@ -31,6 +31,11 @@ def coords_to_ward(lon, lat):
         "address": 'Used geolocation data for Latitude: %.4f and Longitude: %.4f' % (float(lat), float(lon))
     }
 
+def ward_to_ward(ward_no):
+    return {
+        "ward": ward_no,
+        "address": "Ward: %s" % ward_no
+    }
 
 def address_to_ward(address):
     r = requests.get(URL % address)

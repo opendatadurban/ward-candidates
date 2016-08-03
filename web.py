@@ -18,13 +18,16 @@ def get_candidates():
     address = request.args.get("address")
     lat = request.args.get("lat")
     lon = request.args.get("lon")
+    ward_no = request.args.get("ward")
+
     variables = {}
     candidates = []
-    ward = None
     if address:
         ward = a2c.address_to_ward(address)
     elif lat:
         ward = a2c.coords_to_ward(lon, lat)
+    elif ward_no:
+        ward = a2c.ward_to_ward(ward_no)
 
     if ward:
         variables.update(ward)
