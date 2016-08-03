@@ -19,6 +19,7 @@ def get_candidates():
     lat = request.args.get("lat")
     lon = request.args.get("lon")
     ward_no = request.args.get("ward")
+    ward = None
 
     variables = {}
     candidates = []
