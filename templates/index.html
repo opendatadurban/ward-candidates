@@ -10,7 +10,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
+    {% if ward %}
+    <title>Who are you voting for in ward: {{ ward }}?</title>
+    {% else %}
     <title>Who are you voting for?</title>
+    {% endif %}
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
