@@ -57,7 +57,7 @@ def address_to_ward(address):
 
     for key in js:
         if "type_name" in js[key]:
-            ward_no = js[key]["name"]
+            ward_no = js[key]["codes"]["MDB"]
             ward_key = key
 
     for address in js["addresses"]:
