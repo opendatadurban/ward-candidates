@@ -6,3 +6,4 @@ MarkupSafe
 requests
 Werkzeug
 wheel
+gunicorn
