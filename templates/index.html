@@ -23,31 +23,6 @@
     <link href="static/css/voting.css" rel="stylesheet">
     <script src="/static/js/jquery.js"></script>
 
-    <script>
-
-        function geoFindMe() {
-            document.getElementById("locate").textContent="Locating, please wait...";
-            if (!navigator.geolocation) {
-                console.log("Geolocation is not supported by your browser");
-            }
-
-            function success(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                document.getElementById("lat").value=latitude;
-                document.getElementById("lon").value=longitude;
-                document.getElementById("locate").textContent="You have been located!";
-            };
-
-            function error() {
-                document.getElementById("locate").textContent="Unable to find your location";
-                //console.log("Unable to retrieve your location");
-            };
-
-            navigator.geolocation.getCurrentPosition(success, error);
-        }
-    </script>
-
 </head>
 
 <body>
@@ -74,11 +49,6 @@
                                 <input type="hidden" id="lon" name="lon">
                                 <p class="help-block">Please include your suburb name in the address where possible, putting just the city may lead to a crash. </p>
                             </div>
-                            <label class="control-label" for="address">Or, use your location:</label>
-                            <div class="small">Sorry, doesn't work in Chrome</div>
-                            <br>
-                            <button type="button" class="btn btn-default" id="locate" onclick="geoFindMe()">Locate</button>
-                            <br>
                         </form>
 
                         {% if ward %}
@@ -125,12 +95,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12" style="">
-                A <a target="_blank" href="http://www.codebridge.co.za">Codebridge</a> collaboration between <a target="_blank" href="http://code4sa.org/">Code4SA</a> and <a target="_blank" href="http://opendata.durban">Open Data Durban</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12" style="">
-                Download the Android App <a href="http://goo.gl/WqVwJp">here</a>
+                A collaboration between <a target="_blank" href="https://openup.org.za/">OpenUp</a> and <a target="_blank" href="https://opencitieslab.org">Open Cities Lab</a>
             </div>
         </div>
     </div>
