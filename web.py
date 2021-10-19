@@ -31,6 +31,7 @@ def get_candidates():
     elif ward_no:
         ward = a2c.ward_to_ward(ward_no)
 
+    print('Ward identified - {}'.format(ward))
     if ward:
         if ward['ward']:
             variables.update(ward)
@@ -43,6 +44,7 @@ def get_candidates():
         else:
             variables['missing'] = True
     return render_template('index.html', **variables)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
