@@ -25,7 +25,7 @@ def load_data():
     data = json.load(open(DATA_FILE))
     for ward, candidates in data.items():
         for candidate in candidates:
-            idno = candidate["IDNumber"]
+            idno = candidate["Fullname"] + candidate["Surname"]
             ids[idno].append(ward)
     return data, ids
 

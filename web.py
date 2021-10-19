@@ -9,7 +9,7 @@ from flask import render_template
 from flask_sslify import SSLify
 
 app = Flask(__name__)
-sslify = SSLify(app)
+# sslify = SSLify(app)
 
 
 @app.route("/hello")
@@ -41,7 +41,7 @@ def get_candidates():
             variables["candidates"] = candidates
             for candidate in candidates:
                 age = a2c.get_age(candidate["IDNumber"])
-                candidate["wards"] = a2c.ids[candidate["IDNumber"]]
+                candidate["wards"] = a2c.ids[candidate["Fullname"] + candidate["Surname"]]
                 candidate["age"] = age
         else:
             variables['missing'] = True
