@@ -7,3 +7,4 @@ requests
 Werkzeug
 wheel
 gunicorn
+Flask-SSLify
