@@ -62,7 +62,7 @@
                             <h1>Your candidates are:</h1>
                             <ol>
                                 {% for candidate in candidates %}
-                                    <li><a target="_blank" href="http://www.google.com/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }} </a>(Age: {{ candidate.age }}) 
+                                    <li><a target="_blank" href="http://www.google.co.za/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }} </a>(Age: {{ candidate.age }})
                                         - {{ candidate.Party|title }}</li>
                                         <div class="small">
                                             Wards this candidate is contesting:
@@ -105,10 +105,10 @@
     function init() {
         var input = document.getElementById('address');
         var options = {
-            types: ['(cities)'],
+
             componentRestrictions: {country: 'za'}
         };
-        var autocomplete = new google.maps.places.Autocomplete(input);
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
     }
     </script>
     <script>

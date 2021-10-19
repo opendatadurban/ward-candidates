@@ -12,6 +12,8 @@ URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
 
 def get_age(idnumber):
     year = 1900 + int(idnumber[0:2])
+    if year <= 1903:
+        year += 100
     month = int(idnumber[2:4])
     day = int(idnumber[4:6])
     today = datetime.datetime.now()
