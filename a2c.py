@@ -6,7 +6,7 @@ from jinja2 import Template
 import datetime
 
 DATA_FILE = "data.json"
-URL = "http://mapit.code4sa.org/address?address=%s&generation=2&type=WD"
+URL = "http://mapit.code4sa.org/address?address=%s&generation=3&type=WD"
 URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
 
 
