@@ -11,9 +11,9 @@
     <link rel="icon" href="../../favicon.ico">
 
     {% if ward %}
-    <title>Who are you voting for in ward: {{ ward }}?</title>
+        <title>Who are you voting for in ward: {{ ward }}?</title>
     {% else %}
-    <title>Who are you voting for?</title>
+        <title>Who are you voting for?</title>
     {% endif %}
 
     <!-- Bootstrap core CSS -->
@@ -22,12 +22,17 @@
     <!-- Custom styles for this template -->
     <link href="static/css/voting.css" rel="stylesheet">
     <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ8D7KDGX8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'G-QJ8D7KDGX8');
@@ -38,66 +43,70 @@
 <body>
 
 <section class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-info">
-                    <div class="panel-heading">Who are you voting for?</div>
-                    <div class="panel-body">
-                        {% if missing %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">Who are you voting for?</div>
+                <div class="panel-body">
+                    {% if missing %}
                         <p class="alert alert-warning">Hmm, we couldn't find your address or ward. Please try again.</p>
-                        {% endif %}
-                        <form role="form" action="/">
-                            <div class="form-group">
-                                <label class="control-label" for="address">Enter your address:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="e.g. 54 Main Rd, St James" value="{{ address }}">
-                                    <span class="input-group-btn">
+                    {% endif %}
+                    <form role="form" action="/">
+                        <div class="form-group">
+                            <label class="control-label" for="address">Enter your address:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="address" name="address"
+                                       placeholder="e.g. 54 Main Rd, St James" value="{{ address }}">
+                                <span class="input-group-btn">
                                         <button type="submit" class="btn btn-primary">Find my ward</button>
                                     </span>
-                                </div>
-                                <input type="hidden" id="lat" name="lat">
-                                <input type="hidden" id="lon" name="lon">
-                                <p class="help-block">Please include your suburb name in the address where possible, putting just the city may lead to a crash. </p>
                             </div>
-                        </form>
+                            <input type="hidden" id="lat" name="lat">
+                            <input type="hidden" id="lon" name="lon">
+                            <p class="help-block">Please include your suburb name in the address where possible, putting
+                                just the city may lead to a crash. </p>
+                        </div>
+                    </form>
 
-                        {% if ward %}
+                    {% if ward %}
                         <div id="results">
                             {% if address %}
-                            <h1>Address:</h1>
-                            <p> {{ address }}</p>
-                                            
-                            <p>Get more information about this ward in <a href="https://www.wazimap.co.za/profiles/ward-{{ ward }}">Wazimap</a></p>
+                                <h1>Address:</h1>
+                                <p> {{ address }}</p>
 
-                            <h1>Your candidates are:</h1>
-                            <ol>
-                                {% for candidate in candidates %}
-                                    <li><a target="_blank" href="http://www.google.co.za/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }} </a>(Age: {{ candidate.age }})
-                                        - {{ candidate.Party|title }}</li>
+                                <p>Get more information about this ward in <a
+                                        href="https://www.wazimap.co.za/profiles/ward-{{ ward }}">Wazimap</a></p>
+
+                                <h1>Your candidates are:</h1>
+                                <ol>
+                                    {% for candidate in candidates %}
+                                        <li><a target="_blank"
+                                               href="http://www.google.co.za/search?q={{ candidate.Fullname|title }}+{{ candidate.Surname|title }}">{{ candidate.Fullname|title }} {{ candidate.Surname|title }} </a>(Age: {{ candidate.age }})
+                                            - {{ candidate.Party|title }}</li>
                                         <div class="small">
                                             Wards this candidate is contesting:
                                             <p>
-                                            {% for ward in candidate.wards %}
-                                                <a href="/?ward={{ ward }}">{{ ward }}</a>
-                                            {% endfor %}
+                                                {% for ward in candidate.wards %}
+                                                    <a href="/?ward={{ ward }}">{{ ward }}</a>
+                                                {% endfor %}
                                             </p>
                                         </div>
-                                {% endfor %}
-                            </ol>
+                                    {% endfor %}
+                                </ol>
                             {% endif %}
                         </div>
-{#                        <div>#}
-{#                            <h2>Results in 2011</h2>#}
-{#                            <iframe id="cr-embed-ward-{{ ward }}-elections-municipal_2011-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-municipal_2011-party_distribution&dataYear=2011&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>#}
-{#                            <h2>Results in 2014</h2>#}
-{#                            <iframe id="cr-embed-ward-59500033-elections-municipal_2016-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-municipal_2016-party_distribution&dataYear=2016&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>#}
-{#                            <script src="https://wazimap.co.za/static/js/embed.chart.make.js"></script>#}
-{#                        </div>#}
-                        {% endif %}
-                    </div>
+                        {#                        <div>#}
+                        {#                            <h2>Results in 2011</h2>#}
+                        {#                            <iframe id="cr-embed-ward-{{ ward }}-elections-municipal_2011-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-municipal_2011-party_distribution&dataYear=2011&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>#}
+                        {#                            <h2>Results in 2014</h2>#}
+                        {#                            <iframe id="cr-embed-ward-59500033-elections-municipal_2016-party_distribution" class="census-reporter-embed" src="https://wazimap.co.za/embed/iframe.html?geoID=ward-{{ ward }}&chartDataID=elections-municipal_2016-party_distribution&dataYear=2016&chartType=histogram&chartHeight=200&chartQualifier=&chartTitle=Voters+by+party&initialSort=&statType=scaled-percentage" frameborder="0" width="100%" height="300" style="margin: 1em; max-width: 720px;"></iframe>#}
+                        {#                            <script src="https://wazimap.co.za/static/js/embed.chart.make.js"></script>#}
+                        {#                        </div>#}
+                    {% endif %}
                 </div>
             </div>
         </div>
+    </div>
 
 </section>
 
@@ -105,13 +114,39 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12" style="">
-                A collaboration between <a target="_blank" href="https://openup.org.za/">OpenUp</a> and <a target="_blank" href="https://opencitieslab.org">Open Cities Lab</a>
+                A collaboration between <a target="_blank" href="https://openup.org.za/">OpenUp</a> and <a
+                    target="_blank" href="https://opencitieslab.org">Open Cities Lab</a>
+            </div>
+            <div class="row text-center">
+                <a href="#" class="btn btn-mini btn-primary" data-toggle="modal" data-target="#basicModal">Embed this
+                    widget</a>
             </div>
         </div>
     </div>
 </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeGLKcYxveDVc7V9BCnThO2-4l6odiY-E&libraries=places&callback=init" async defer></script>
-    <script>
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Embed Code</h4>
+      </div>
+      <div class="modal-body">
+          <div id="results">
+                    <p><code id="clipboardExample1">
+                        &lt;iframe src="https://mycandidate.opencitieslab.org/" style="border: none;width: 100%; height: 400px"&gt;&lt;/iframe&gt;
+                    </code></p>
+                </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeGLKcYxveDVc7V9BCnThO2-4l6odiY-E&libraries=places&callback=init"
+        async defer></script>
+<script>
     function init() {
         var input = document.getElementById('address');
         var options = {
@@ -120,7 +155,7 @@
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
     }
-    </script>
+</script>
 </body>
 
 
