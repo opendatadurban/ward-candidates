@@ -7,14 +7,19 @@ from flask import Response
 from flask import request
 from flask import render_template
 from flask_sslify import SSLify
-
+import os
+from whatsapp_responses import whatsapp_response
 app = Flask(__name__)
+
+env = 'debug'
+app.config['ENV'] = env
+app.config.from_pyfile('config.py')
+
 sslify = SSLify(app)
-
-
 @app.route("/hello")
 def hello():
     return "Hello"
+
 
 @app.route("/")
 def get_candidates():
@@ -47,6 +52,12 @@ def get_candidates():
             variables['missing'] = True
     return render_template('index.html', **variables)
 
+
+@app.route('/wa-bot', methods=['POST'])
+def wa_bot():
+    print(request.get_json())
+    data = request.get_json()
+    return whatsapp_response(data)
 
 if __name__ == "__main__":
     app.run()
