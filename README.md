@@ -9,3 +9,7 @@ This codebase began at a Codebridge community evening and has now been utilized 
 * cd who-are-you-voting-for
 * pip install -r requirements.txt
 * python web.py
+
+## Licence
+#### Attribution 4.0 International
+[![License: CC BY 4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](https://creativecommons.org/licenses/by/4.0/) 
