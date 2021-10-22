@@ -1,6 +1,7 @@
 import os
 import urllib
 import requests
+import logging
 
 def whatsapp_response(data):
     bearer_token = os.getenv("BEARER_TOKEN")
@@ -10,16 +11,26 @@ def whatsapp_response(data):
     }
     try:
         incoming_msg = data["messages"][0]["text"]['body']
-        response_url = F"{os.getenv('DOMAIN')}?address={urllib.parse.quote(incoming_msg, safe='')}"
-        print(incoming_msg)
-        payload = {"preview_url": "true",
-                   "recipient_type": "individual",
-                   "to": data["contacts"][0]["wa_id"],
-                   "type": "text",
-                   "text": {"body": F"Press the link to find out your candidate: {response_url}"}}
+        if "address" in incoming_msg:
+            response_url = F"{os.getenv('DOMAIN')}"
+            print(incoming_msg)
+            payload = {"preview_url": "true",
+                       "recipient_type": "individual",
+                       "to": data["contacts"][0]["wa_id"],
+                       "type": "text",
+                       "text": {"body": F"Hi There !%0aEnter your address to find your local candidate link or Visit the site directly: {response_url}"}}
+        else:
+            response_url = F"{os.getenv('DOMAIN')}?address={urllib.parse.quote(incoming_msg, safe='')}"
+            print(incoming_msg)
+            payload = {"preview_url": "true",
+                       "recipient_type": "individual",
+                       "to": data["contacts"][0]["wa_id"],
+                       "type": "text",
+                       "text": {"body": F"Press the link to find out your candidate: {response_url}"}}
         r = requests.post("https://whatsapp.turn.io/v1/messages", json=payload, headers=headers)
         return "True"
     except Exception as e:
+        logging.error(e)
         response_url = F"{os.getenv('DOMAIN')}"
         payload = {"preview_url": "true",
                    "recipient_type": "individual",
