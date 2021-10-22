@@ -11,7 +11,7 @@ def whatsapp_response(data):
     }
     try:
         incoming_msg = data["messages"][0]["text"]['body']
-        if "address" in incoming_msg:
+        if "address" in incoming_msg or "join" in incoming_msg:
             response_url = F"{os.getenv('DOMAIN')}"
             print(incoming_msg)
             payload = {"preview_url": "true",
