@@ -31,6 +31,28 @@ def load_data():
             ids[idno].append(ward)
     return data, ids
 
+def google_coords_to_ward(geocode_result):
+    ward_no = None
+    try:
+        lon,lat = geocode_result[0]["geometry"]["location"]["lng"],geocode_result[0]["geometry"]["location"]["lat"]
+        url = URLxy % (lon, lat)
+        r = requests.get(url)
+        js = r.json()
+
+        for key in js:
+            if js[key]["type_name"] == 'Ward':
+                ward_no = js[key]["codes"]["MDB"]
+
+        return {
+            "ward": ward_no,
+            "address": 'Used geolocation data for Latitude: %.4f and Longitude: %.4f' % (float(lat), float(lon))
+        }
+    except Exception as e:
+        print(F"coordinate error: {e}")
+        return {
+            "ward": ward_no,
+            "address": ""
+        }
 
 def coords_to_ward(lon, lat):
     url = URLxy % (lon, lat)
@@ -54,6 +76,24 @@ def ward_to_ward(ward_no):
         "address": "Ward: %s" % ward_no
     }
 
+def google_address_to_ward(js):
+    ward_no = None
+    try:
+        formatted_address = "Unknown"
+
+        if "formatted_address" in js[0]:
+            formatted_address = js[0]["formatted_address"]
+
+        return {
+            "ward": ward_no,
+            "address": formatted_address
+        }
+    except Exception as e:
+        print(e)
+        return {
+            "ward": ward_no,
+            "address": ""
+        }
 
 def address_to_ward(address):
     r = requests.get(URL % address)
