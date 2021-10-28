@@ -7,7 +7,7 @@ import datetime
 
 DATA_FILE = "data.json"
 URL = "http://mapit.code4sa.org/address?address=%s&generation=3&type=WD"
-URLxy = "http://mapit.code4sa.org/point/4326/%s,%s"
+URLxy = "http://mapit.code4sa.org/point/4326/%s,%s?generation=3"
 
 
 def get_age(idnumber):
@@ -36,6 +36,7 @@ def google_coords_to_ward(geocode_result):
     try:
         lon,lat = geocode_result[0]["geometry"]["location"]["lng"],geocode_result[0]["geometry"]["location"]["lat"]
         url = URLxy % (lon, lat)
+        print(url)
         r = requests.get(url)
         js = r.json()
 
