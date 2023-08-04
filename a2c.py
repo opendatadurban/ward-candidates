@@ -37,10 +37,9 @@ def coords_to_ward(lon, lat):
     r = requests.get(url)
     js = r.json()
     ward_no = None
-
     for key in js:
         if js[key]["type_name"] == 'Ward':
-            ward_no = js[key]["name"]
+            ward_no = js[key]["codes"]["MDB"]
 
     return {
         "ward": ward_no,

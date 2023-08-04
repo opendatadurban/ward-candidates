@@ -2,7 +2,7 @@ import json
 import a2c
 import requests
 import json
-from flask import Flask
+from flask import Flask, jsonify
 from flask import Response
 from flask import request
 from flask import render_template
@@ -44,20 +44,30 @@ def get_candidates():
             variables.update(ward)
             candidates = a2c.get_candidates(ward["ward"])
             variables["candidates"] = candidates
+            if not candidates:
+                return jsonify(variables)
             for candidate in candidates:
                 age = a2c.get_age(candidate["IDNumber"])
                 candidate["wards"] = a2c.ids[candidate["Fullname"] + candidate["Surname"]]
                 candidate["age"] = age
         else:
             variables['missing'] = True
+    if variables:
+        return jsonify(variables)
     return render_template('index.html', **variables)
 
 
 @app.route('/wa-bot', methods=['POST'])
 def wa_bot():
-    print(request.get_json())
     data = request.get_json()
-    return whatsapp_response(data)
+    messages = data.get("messages", None)
+    if bool(messages):
+        print(">>>>>>>>>>>>")
+        return whatsapp_response(data)
+    else:
+        # Handle the case when this is a response, not the initial request
+        return "Response Received" 
+    
 
 if __name__ == "__main__":
     app.run()
