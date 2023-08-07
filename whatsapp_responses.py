@@ -33,8 +33,9 @@ def whatsapp_response(data):
             print("""address string""")
             address = incoming_msg["text"]["body"]
             response_url = F"{os.getenv('DOMAIN')}?address={urllib.parse.quote(address, safe='')}"
-
+        print("URL>>>>>>>>>", response_url)
         response_data = requests.get(response_url).json()
+        print("DATA>>>>>>>>>>>", response_data)
         if response_data["candidates"]:
             ward_data = {
                 "address": response_data['address'],

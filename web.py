@@ -62,7 +62,7 @@ def wa_bot():
     data = request.get_json()
     messages = data.get("messages", None)
     if bool(messages):
-        print(">>>>>>>>>>>>")
+        print(">>>>>>>>>>>>", data)
         return whatsapp_response(data)
     else:
         # Handle the case when this is a response, not the initial request
