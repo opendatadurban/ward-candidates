@@ -53,7 +53,7 @@ def get_candidates():
         else:
             variables['missing'] = True
     if variables:
-        return jsonify(variables)
+        return jsonify(variables), 200
     return render_template('index.html', **variables)
 
 
@@ -62,8 +62,8 @@ def wa_bot():
     data = request.get_json()
     messages = data.get("messages", None)
     if bool(messages):
-        print(">>>>>>>>>>>>", data)
-        return whatsapp_response(data)
+        whatsapp_response(data)
+        return jsonify(data), 200
     else:
         # Handle the case when this is a response, not the initial request
         return "Response Received" 

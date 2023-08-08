@@ -18,24 +18,13 @@ def whatsapp_response(data):
             latitude = incoming_msg["location"]["latitude"]
             longitude = incoming_msg["location"]["longitude"]
             response_url = F"{os.getenv('DOMAIN')}?lat={latitude}&lon={longitude}"
-
-        # elif "address" in incoming_msg or "join" in incoming_msg:
-        #     response_url = F"{os.getenv('DOMAIN')}"
-        #     print(incoming_msg)
-        #     payload = {"preview_url": "true",
-        #                "recipient_type": "individual",
-        #                "to": data["contacts"][0]["wa_id"],
-        #                "type": "text",
-        #                "text": {"body": F"Hi There !%0aEnter your address to find your local candidate link or Visit the site directly: {response_url}"}
-        #             }
         
         elif incoming_msg["type"] == "text":
             print("""address string""")
             address = incoming_msg["text"]["body"]
             response_url = F"{os.getenv('DOMAIN')}?address={urllib.parse.quote(address, safe='')}"
-        print("URL>>>>>>>>>", response_url)
+
         response_data = requests.get(response_url).json()
-        print("DATA>>>>>>>>>>>", response_data)
         if response_data["candidates"]:
             ward_data = {
                 "address": response_data['address'],
@@ -56,7 +45,7 @@ def whatsapp_response(data):
                     "to": data["contacts"][0]["wa_id"],
                     "type": "text",
                     "text": {
-                        "body": f"Your ward no. is {ward_data['candidates'][0]['PR List OrderNo / Ward No']} and candidates  are:\n\n" +
+                        "body": f"Your ward no. is {ward_data['candidates'][0]['PR List OrderNo / Ward No']} for address: {ward_data['address']}.\n\n Candidates in your arear are:\n\n" +
                         '\n\n'.join([f"{obj['Fullname']} {obj['Surname']} age {str(obj['age'])}, representing {obj['Party']}" for obj in ward_data['candidates']])
                     }
                 }
