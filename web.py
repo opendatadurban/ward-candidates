@@ -9,6 +9,7 @@ from flask import render_template
 from flask_sslify import SSLify
 import os
 from whatsapp_responses import whatsapp_response
+from wa_twilio_response import twilio_whatsapp_response
 app = Flask(__name__)
 
 env = 'debug'
@@ -68,6 +69,25 @@ def wa_bot():
         # Handle the case when this is a response, not the initial request
         return "Response Received" 
     
+
+@app.route('/wa-bot-twilio', methods=['POST'])
+def wa_bot_twilio():
+    incoming_msg =  request.values.get('Body', '').lower() 
+    sender_number =  request.values.get('From', '').lower()
+    lat =  request.form.get('Latitude')
+    lon =  request.form.get('Longitude')
+
+    data = {"lat": lat, "lon": lon, "sender_number": sender_number} \
+        if (bool(lat) and bool(lon))\
+        else {"message": incoming_msg, "sender_number": sender_number}
+
+    if bool(data):
+        twilio_whatsapp_response(data)
+        return jsonify(data), 200
+    else:
+        # Handle the case when this is a response, not the initial request
+        return "No data received" 
+
 
 if __name__ == "__main__":
     app.run()
