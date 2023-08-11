@@ -8,3 +8,4 @@ Werkzeug
 wheel
 gunicorn
 Flask-SSLify
+twilio
