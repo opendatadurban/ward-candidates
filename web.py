@@ -51,10 +51,11 @@ def get_candidates():
                 age = a2c.get_age(candidate["IDNumber"])
                 candidate["wards"] = a2c.ids[candidate["Fullname"] + candidate["Surname"]]
                 candidate["age"] = age
+            return jsonify(variables), 200
         else:
             variables['missing'] = True
-    if variables:
-        return jsonify(variables), 200
+            return jsonify(variables), 200
+
     return render_template('index.html', **variables)
 
 
