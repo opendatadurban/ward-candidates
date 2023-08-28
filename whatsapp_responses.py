@@ -46,19 +46,11 @@ def whatsapp_response(data):
                     "type": "text",
                     "text": {
                         "body": f"Your ward no. is {ward_data['candidates'][0]['PR List OrderNo / Ward No']} for address: {ward_data['address']}.\n\n Candidates in your arear are:\n\n" +
-                        '\n\n'.join([f"{obj['Fullname']} {obj['Surname']} age {str(obj['age'])}, representing {obj['Party']}" for obj in ward_data['candidates']])
+                        '\n\n'.join([f"{obj['Fullname']} {obj['Surname']} age {str(obj['age'])}, representing {obj['Party']}\n[More info about candidate: https://www.google.com/search?q={urllib.parse.quote(obj['Fullname'] + ' ' + obj['Surname'])}]" \
+                            for obj in ward_data['candidates']])
                     }
                 }
-        else:
-            payload = {
-                    "preview_url": "true",
-                    "recipient_type": "individual",
-                    "to": data["contacts"][0]["wa_id"],
-                    "type": "text",
-                    "text": {
-                        "body": F"We could not retrieve any candidates for the provided location, visit {os.getenv('DOMAIN')} for more information."
-                    }
-                }
+
         r = requests.post("https://whatsapp.turn.io/v1/messages", json=payload, headers=headers)
         return "True"
     except Exception as e:

@@ -1,7 +1,6 @@
 from flask import request, Response
 import os, urllib, requests, logging
 from twilio.rest import Client
-from twilio.base.exceptions import TwilioRestException
 
 def twilio_whatsapp_response(data):
     # Find your Account SID and Auth Token at twilio.com/console
@@ -40,11 +39,11 @@ def twilio_whatsapp_response(data):
                 }  
             
             # Construct the message body
-            message_body = f"Your ward no. is {ward_data['candidates'][0]['PR List OrderNo / Ward No']} \
-                for address: {ward_data['address']}.\n\n Candidates in your area are:\n\n"
+            message_body = f"Your ward no. is {ward_data['candidates'][0]['PR List OrderNo / Ward No']} for address: {ward_data['address']}.\n\n Candidates in your area are:\n\n"
             candidates_info = [
-                f"{obj['Fullname']} {obj['Surname']} age {str(obj['age'])}, \
-                    representing {obj['Party']}" for obj in ward_data['candidates']
+                f"{obj['Fullname']} {obj['Surname']} age {str(obj['age'])}, representing {obj['Party']} \
+                    \n[More info about candidate: https://www.google.com/search?q={urllib.parse.quote(obj['Fullname'] + ' ' + obj['Surname'])}]" 
+                    for obj in ward_data['candidates']
                 ]
             chunk_size = 1600 - len(message_body)  # Account for the initial message body
             message_chunks = [message_body]
@@ -67,14 +66,8 @@ def twilio_whatsapp_response(data):
                     to=data["sender_number"]  # Recipient's WhatsApp number
                 )
 
-        else:
-            message = client.messages.create(
-                f"We could not retrieve any candidates for the provided location, visit {os.getenv('DOMAIN')} for more information.",
-                from_='whatsapp:+27600702558',
-                to=data["sender_number"] 
-            )
         return message.sid
-    except TwilioRestException as e:
+    except Exception as e:
         logging.error(e)
         message = client.messages.create(
             body=f"We could not retrieve any candidates for the provided location, visit {os.getenv('DOMAIN')} for more information.",
