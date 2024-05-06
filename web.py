@@ -2,7 +2,7 @@ import json
 import a2c
 import requests
 import json
-from flask import Flask
+from flask import Flask,redirect
 from flask import Response
 from flask import request
 from flask import render_template
@@ -11,7 +11,7 @@ import googlemaps
 import os
 
 app = Flask(__name__)
-sslify = SSLify(app)
+# sslify = SSLify(app)
 
 
 @app.route("/hello")
@@ -19,6 +19,10 @@ def hello():
     return "Hello"
 
 @app.route("/")
+def home_route():
+    return redirect("https://southafrica.mycandidate.africa", code=302)
+
+@app.route("/candidate")
 def get_candidates():
     address = request.args.get("address")
     lat = request.args.get("lat")
