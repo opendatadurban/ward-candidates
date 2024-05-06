@@ -9,6 +9,7 @@ from flask import render_template
 from flask_sslify import SSLify
 import googlemaps
 import os
+from whatsapp_responses import whatsapp_response
 
 app = Flask(__name__)
 sslify = SSLify(app)
@@ -63,6 +64,11 @@ def get_candidates():
     maps_key_js = os.getenv('JS_KEY','AIzaSyDeGLKcYxveDVc7V9BCnThO2-4l6odiY-E')
     return render_template('index.html', **variables,maps_key_js=maps_key_js)
 
+@app.route('/wa-bot', methods=['POST'])
+def wa_bot():
+    print(request.get_json())
+    data = request.get_json()
+    return whatsapp_response(data)
 
 if __name__ == "__main__":
     app.run()
