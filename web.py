@@ -11,18 +11,9 @@ import googlemaps
 import os
 
 app = Flask(__name__)
-# sslify = SSLify(app)
-
-
-@app.route("/hello")
-def hello():
-    return "Hello"
+sslify = SSLify(app)
 
 @app.route("/")
-def home_route():
-    return redirect("https://southafrica.mycandidate.africa", code=302)
-
-@app.route("/candidate")
 def get_candidates():
     address = request.args.get("address")
     lat = request.args.get("lat")
